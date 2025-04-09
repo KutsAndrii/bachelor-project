@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/validation.js') }}" defer></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <h3 class="sign-in">Register</h3>
+      <div class="button">
+        <a href="{{ url_for('login') }}">Sign In</a>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <form id="register-form" action="{{ url_for('register') }}" method="POST">
+      <!-- Email -->
+      <div>
+        <label class="user" for="email">
+          <img src="{{ url_for('static', filename='images/depositphotos_80611608-stock-illustration-user-vector-icon.jpg') }}" alt="User Icon" class="icon" />
+        </label>
+        <input class="user-input" type="text" name="email" id="email" placeholder="Enter your email" required />
+        <small class="error-message" id="email-error"></small>
+      </div>
+      <!-- Password -->
+      <div>
+        <label class="lock" for="password">
+          <img src="{{ url_for('static', filename='images/istockphoto-936681148-612x612.jpg') }}" alt="Lock Icon" class="icon" />
+        </label>
+        <input type="password" name="password" id="password" placeholder="Enter your password" required />
+        <small class="error-message" id="password-error"></small>
+      </div>
+      <!-- Confirm Password -->
+      <div>
+        <label class="lock" for="confirm-password">
+          <img src="{{ url_for('static', filename='images/istockphoto-936681148-612x612.jpg') }}" alt="Lock Icon" class="icon" />
+        </label>
+        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm your password" required /> 
+        <small class="error-message" id="confirm-password-error"></small>
+      </div>
+      <!-- Submit -->
+      <div>
+        <input type="submit" value="Register" />
+      </div>
+    </form>
+  </div>
+  <script src="{{ url_for('static', filename='js/validation.js') }}" defer></script>
+</body>
+</html>
