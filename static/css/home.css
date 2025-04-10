@@ -1,0 +1,66 @@
+/* sumdu-style.css */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #f8f9fa;
+  color: #212529;
+}
+
+header {
+  background: #002663;
+  color: #fff;
+  padding: 2rem;
+  text-align: center;
+}
+
+header img {
+  background: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin-top: 0.5rem;
+}
+
+nav a {
+  color: #ffc107;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 1rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+h3 {
+  color: #002663;
+}
+
+footer {
+  background: #002663;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.85rem;
+}
