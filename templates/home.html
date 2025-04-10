@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Інвентаризація | Бакалаврська робота</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Вебсайт для представлення бакалаврської роботи">
+    <meta name="keywords" content="бакалаврська, інвентар, flask, git">
+    <meta property="og:title" content="Лендінг для Бакалаврської Роботи" />
+    <meta property="og:description" content="Сайт з демонстрацією функцій інвентаризації" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://localhost:5000/" />
+    <meta property="og:image" content="http://localhost:5000/static/favicon.ico" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Лендінг Бакалаврської",
+      "url": "http://localhost:5000"
+    }
+    </script>
+    <title>Лендінг для Бакалаврської Роботи</title>
+    
 <body>
     <header>
         <h1>Лендінг для Бакалаврської Роботи</h1>
@@ -22,8 +35,8 @@
     </section>
 
     <section>
-        <a href="{{ url_for('index') }}"><button>Register</button></a>
-        <a href="{{ url_for('login') }}"><button>Login</button></a>
+        <a href="{{ url_for('index') }}" aria-label="Перейти до реєстрації"><button>Register</button></a>
+        <a href="{{ url_for('login') }}" aria-label="Вхід"><button>login</button></a>
     </section>
 
     <footer>
