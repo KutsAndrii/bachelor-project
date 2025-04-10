@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інвентаризація | Бакалаврська робота</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Лендінг для Бакалаврської Роботи</h1>
+        <p>Цей сайт розроблено для демонстрації бакалаврської роботи з використанням Flask, PostgreSQL та системи контролю версій Git.</p>
+    </header>
+
+    <section>
+        <h2>Функціонал сайту</h2>
+        <ul>
+            <li>Реєстрація та авторизація користувача</li>
+            <li>Збереження інвентарю (предмети, рідкість, шкода, скорострільність)</li>
+            <li>Фільтрація по категоріях</li>
+        </ul>
+    </section>
+
+    <section>
+        <a href="{{ url_for('index') }}"><button>Register</button></a>
+        <a href="{{ url_for('login') }}"><button>Login</button></a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025. Розроблено для бакалаврської роботи.</p>
+    </footer>
+</body>
+</html>
