@@ -18,10 +18,16 @@ db_config = {
 def get_db_connection():
     return psycopg2.connect(**db_config)
 
-# Головна сторінка - Форма реєстрації
+# Головна сторінка 
 @app.route('/')
+def home():
+    return render_template('home.html')
+
+#Cторінка - Форма реєстрації
+@app.route('/register')
 def index():
     return render_template('register.html')
+
 
 # Сторінка логіну
 @app.route('/login')
@@ -133,3 +139,4 @@ def add_item():
 
 if __name__ == '__main__':
       app.run(debug=True, host='0.0.0.0', port=5000)
+
