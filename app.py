@@ -37,6 +37,15 @@ def login():
 # Сторінка інвентарю
 @app.route('/inventory', methods=['GET', 'POST'])
 def inventory():
+    """
+    Відображає інвентар користувача.
+
+    Якщо користувач не авторизований — перенаправляє на логін.
+    Підтягує всі предмети користувача або фільтрує їх за рідкістю.
+
+    Returns:
+        str: HTML-сторінка з інвентарем.
+    """
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
@@ -60,6 +69,15 @@ def inventory():
 # Обробка даних реєстрації
 @app.route('/register', methods=['POST'])
 def register():
+    """
+    Обробляє дані з форми реєстрації.
+
+    Перевіряє, чи співпадають паролі, хешує пароль, перевіряє чи вже існує користувач,
+    додає нового користувача в базу даних.
+
+    Returns:
+        Response: Редірект на сторінку логіну або інвентарю.
+    """    
     email = request.form['email']
     password = request.form['password']
     confirm_password = request.form['confirm-password']
@@ -139,4 +157,3 @@ def add_item():
 
 if __name__ == '__main__':
       app.run(debug=True, host='0.0.0.0', port=5000)
-
