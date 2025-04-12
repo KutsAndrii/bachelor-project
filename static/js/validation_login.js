@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-  
-    // Функція для створення блоку повідомлень про помилки
-    function showError(element, message) {
-      // Видаляємо попереднє повідомлення, якщо існує
+  const form = document.querySelector('form');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+
+  /**
+   * Відображає повідомлення про помилку під полем форми.
+   *
+   * @param {HTMLElement} element - Елемент форми.
+   * @param {string} message - Текст помилки.
+   */
+  function showError(element, message) {
       const existingError = element.parentElement.querySelector('.error-message');
       if (existingError) existingError.remove();
-  
-      // Створюємо новий елемент для помилки
+
       const error = document.createElement('div');
       error.textContent = message;
       error.classList.add('error-message');
@@ -19,48 +22,49 @@ document.addEventListener('DOMContentLoaded', function () {
       error.style.padding = '5px';
       error.style.borderRadius = '5px';
       element.parentElement.appendChild(error);
-    }
-  
-    // Очищення помилок
-    function clearErrors() {
+  }
+
+  /**
+   * Видаляє всі повідомлення про помилки.
+   */
+  function clearErrors() {
       const errors = document.querySelectorAll('.error-message');
       errors.forEach(error => error.remove());
-    }
-  
-    form.addEventListener('submit', function (e) {
-      e.preventDefault(); // Забороняємо відправку форми, якщо є помилки
-      clearErrors(); // Очищуємо попередні помилки
-  
+  }
+
+  // Подія сабміту форми входу
+  form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearErrors();
       let hasError = false;
-  
-      // Перевірка Email
+
+      // 🔸 Перевірка Email
       const emailValue = emailInput.value.trim();
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailValue) {
-        showError(emailInput, 'Email обов’язковий для заповнення.');
-        hasError = true;
+          showError(emailInput, 'Email обов’язковий для заповнення.');
+          hasError = true;
       } else if (!emailRegex.test(emailValue)) {
-        showError(emailInput, 'Email має містити тільки допустимі символи.');
-        hasError = true;
+          showError(emailInput, 'Email має містити тільки допустимі символи.');
+          hasError = true;
       }
-  
-      // Перевірка Password
+
+      // 🔸 Перевірка пароля
       const passwordValue = passwordInput.value.trim();
       if (!passwordValue) {
-        showError(passwordInput, 'Пароль обов’язковий для заповнення.');
-        hasError = true;
+          showError(passwordInput, 'Пароль обов’язковий для заповнення.');
+          hasError = true;
       } else if (passwordValue.includes(' ')) {
-        showError(passwordInput, 'Пароль не повинен містити пробілів.');
-        hasError = true;
+          showError(passwordInput, 'Пароль не повинен містити пробілів.');
+          hasError = true;
       } else if (passwordValue.length < 4 || passwordValue.length > 12) {
-        showError(passwordInput, 'Пароль має бути від 4 до 12 символів.');
-        hasError = true;
+          showError(passwordInput, 'Пароль має бути від 4 до 12 символів.');
+          hasError = true;
       }
-  
-      // Якщо помилок немає, відправляємо форму
+
+      // Якщо все добре — відправка форми
       if (!hasError) {
-        form.submit();
+          form.submit();
       }
-    });
   });
-  
+});
