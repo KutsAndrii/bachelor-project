@@ -1,0 +1,13 @@
+{
+  "source": {
+    "include": ["static"],
+    "includePattern": ".+\\.js$",
+    "exclude": []
+  },
+  "opts": {
+    "destination": "./out",
+    "template": "node_modules/jsdoc/templates/default",  // Вказуємо стандартний шаблон JSDoc
+    "recurse": true,
+    "verbose": true
+  }
+}
