@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmPasswordInput = document.getElementById('confirm-password');
   
     // Функція для створення блоку повідомлень про помилки
+    /**
+     * Виводить повідомлення про помилку під відповідним полем вводу.
+     *
+     * @param {HTMLElement} element - Елемент форми, біля якого потрібно показати помилку.
+     * @param {string} message - Текст повідомлення про помилку.
+     */ 
     function showError(element, message) {
       // Видаляємо попереднє повідомлення, якщо існує
       const existingError = element.parentElement.querySelector('.error-message');
