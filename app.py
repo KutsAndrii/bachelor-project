@@ -14,27 +14,50 @@ db_config = {
     'password': '12345'
 }
 
-# Функція для створення з'єднання з базою даних
+
 def get_db_connection():
+    """
+    Створює нове з'єднання з базою даних PostgreSQL.
+
+    Returns:
+        connection: Об'єкт з'єднання psycopg2 з базою даних.
+    """
     return psycopg2.connect(**db_config)
 
-# Головна сторінка 
+
 @app.route('/')
 def home():
+    """
+    Відображає головну сторінку застосунку.
+
+    Returns:
+        str: HTML-шаблон головної сторінки.
+    """
     return render_template('home.html')
 
-#Cторінка - Форма реєстрації
+
 @app.route('/register')
 def index():
+    """
+    Відображає форму реєстрації користувача.
+
+    Returns:
+        str: HTML-шаблон сторінки реєстрації.
+    """
     return render_template('register.html')
 
 
-# Сторінка логіну
 @app.route('/login')
 def login():
+    """
+    Відображає форму логіну користувача.
+
+    Returns:
+        str: HTML-шаблон сторінки входу.
+    """
     return render_template('login.html')
 
-# Сторінка інвентарю
+
 @app.route('/inventory', methods=['GET', 'POST'])
 def inventory():
     """
@@ -55,18 +78,21 @@ def inventory():
     conn = get_db_connection()
     with conn.cursor() as cursor:
         if category_filter:
-            cursor.execute('SELECT item_name, rarity, damage, fire_rate FROM inventory WHERE user_id = %s AND rarity = %s', (user_id, category_filter))
+            cursor.execute(
+                'SELECT item_name, rarity, damage, fire_rate FROM inventory WHERE user_id = %s AND rarity = %s',
+                (user_id, category_filter)
+            )
         else:
-            cursor.execute('SELECT item_name, rarity, damage, fire_rate FROM inventory WHERE user_id = %s', (user_id,))
-        
+            cursor.execute(
+                'SELECT item_name, rarity, damage, fire_rate FROM inventory WHERE user_id = %s',
+                (user_id,)
+            )
         items = cursor.fetchall()
 
     conn.close()
-
     return render_template('inventory.html', items=items, selected_category=category_filter)
 
 
-# Обробка даних реєстрації
 @app.route('/register', methods=['POST'])
 def register():
     """
@@ -77,7 +103,7 @@ def register():
 
     Returns:
         Response: Редірект на сторінку логіну або інвентарю.
-    """    
+    """
     email = request.form['email']
     password = request.form['password']
     confirm_password = request.form['confirm-password']
@@ -97,14 +123,25 @@ def register():
         conn.close()
         return redirect(url_for('login'))
 
-    cursor.execute('INSERT INTO users (email, password) VALUES (%s, %s)', (email, hashed_password))
+    cursor.execute(
+        'INSERT INTO users (email, password) VALUES (%s, %s)',
+        (email, hashed_password)
+    )
     conn.commit()
     conn.close()
     return redirect(url_for('inventory'))
 
-# Обробка даних логіну
+
 @app.route('/login_user', methods=['POST'])
 def login_user():
+    """
+    Обробляє логін користувача.
+
+    Перевіряє правильність email і пароля, зберігає user_id в сесії.
+
+    Returns:
+        Response: Редірект на сторінку інвентарю або логіну при помилці.
+    """
     email = request.form['email']
     password = request.form['password']
 
@@ -122,15 +159,32 @@ def login_user():
     conn.close()
     return redirect(url_for('inventory'))
 
-# Обробка виходу з облікового запису
+
 @app.route('/logout')
 def logout():
+    """
+    Вихід з облікового запису.
+
+    Видаляє user_id з сесії та перенаправляє на логін.
+
+    Returns:
+        Response: Редірект на сторінку логіну.
+    """
     session.pop('user_id', None)
     return redirect(url_for('login'))
 
-# Сторінка для додавання предмета
+
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
+    """
+    Додає новий предмет до інвентарю користувача.
+
+    Якщо користувач не авторизований — перенаправляє на логін.
+    У разі POST-запиту — зберігає предмет до бази даних.
+
+    Returns:
+        str | Response: HTML-форма або редірект на інвентар.
+    """
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
@@ -149,11 +203,10 @@ def add_item():
         )
         conn.commit()
         conn.close()
-
-       
         return redirect(url_for('inventory'))
-    
+
     return render_template('add_item.html')
 
+
 if __name__ == '__main__':
-      app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
