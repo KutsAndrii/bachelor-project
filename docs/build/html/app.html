@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="uk-UA" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>app module &#8212; bachelor_project 2004 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=7afc487f"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=0958edf7"></script>
+    <link rel="index" title="Індекс" href="genindex.html" />
+    <link rel="search" title="Пошук" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-app">
+<span id="app-module"></span><h1>app module<a class="headerlink" href="#module-app" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.add_item">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.add_item" title="Link to this definition">¶</a></dt>
+<dd><p>Додає новий предмет до інвентарю користувача.</p>
+<p>Якщо користувач не авторизований — перенаправляє на логін.
+У разі POST-запиту — зберігає предмет до бази даних.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str | Response: HTML-форма або редірект на інвентар.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.get_db_connection">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">get_db_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.get_db_connection" title="Link to this definition">¶</a></dt>
+<dd><p>Створює нове з’єднання з базою даних PostgreSQL.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>connection: Об’єкт з’єднання psycopg2 з базою даних.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.home">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.home" title="Link to this definition">¶</a></dt>
+<dd><p>Відображає головну сторінку застосунку.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: HTML-шаблон головної сторінки.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.index">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.index" title="Link to this definition">¶</a></dt>
+<dd><p>Відображає форму реєстрації користувача.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: HTML-шаблон сторінки реєстрації.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.inventory">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">inventory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.inventory" title="Link to this definition">¶</a></dt>
+<dd><p>Відображає інвентар користувача.</p>
+<p>Якщо користувач не авторизований — перенаправляє на логін.
+Підтягує всі предмети користувача або фільтрує їх за рідкістю.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: HTML-сторінка з інвентарем.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.login">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.login" title="Link to this definition">¶</a></dt>
+<dd><p>Відображає форму логіну користувача.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: HTML-шаблон сторінки входу.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.login_user">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">login_user</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.login_user" title="Link to this definition">¶</a></dt>
+<dd><p>Обробляє логін користувача.</p>
+<p>Перевіряє правильність email і пароля, зберігає user_id в сесії.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Response: Редірект на сторінку інвентарю або логіну при помилці.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.logout">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.logout" title="Link to this definition">¶</a></dt>
+<dd><p>Вихід з облікового запису.</p>
+<p>Видаляє user_id з сесії та перенаправляє на логін.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Response: Редірект на сторінку логіну.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.register">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.register" title="Link to this definition">¶</a></dt>
+<dd><p>Обробляє дані з форми реєстрації.</p>
+<p>Перевіряє, чи співпадають паролі, хешує пароль, перевіряє чи вже існує користувач,
+додає нового користувача в базу даних.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Response: Редірект на сторінку логіну або інвентарю.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">bachelor_project</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Вперед" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навігація</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Куц Андрій.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/app.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
