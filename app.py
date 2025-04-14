@@ -4,9 +4,23 @@ import psycopg2
 from logging_config import logger
 import atexit
 import uuid
+from flask import render_template, request
+from translations import ERROR_MESSAGES
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+@app.errorhandler(404)
+def not_found_error(e):
+    lang = 'uk'  # можна автоматизувати через headers
+    msg = ERROR_MESSAGES[lang][404]
+    return render_template('errors/404.html', **msg), 404
+
+@app.errorhandler(500)
+def internal_error(e):
+    lang = 'uk'
+    msg = ERROR_MESSAGES[lang][500]
+    return render_template('errors/500.html', **msg), 500
 
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -15,6 +29,13 @@ def handle_exception(e):
 
     return render_template("error.html", error_id=error_id), 500
 
+@app.route('/report_issue', methods=['POST'])
+def report_issue():
+    page = request.form['page']
+    details = request.form['details']
+    logger.warning(f"Користувач повідомив про проблему на {page}: {details}")
+    flash("Дякуємо! Ми отримали ваше повідомлення.", "success")
+    return redirect(url_for('home'))
 
 # Параметри підключення до PostgreSQL
 db_config = {
