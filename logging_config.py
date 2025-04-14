@@ -1,14 +1,22 @@
 # logging_config.py
+
+import os
 import logging
+from logging.handlers import RotatingFileHandler
 
-LOG_FORMAT = "%(asctime)s - [%(levelname)s] - %(name)s - %(message)s"
+LOG_LEVEL = os.getenv("LOG_LEVEL", "DEBUG").upper()
 
-logging.basicConfig(
-    level=logging.DEBUG,  # буде змінюватися далі
-    format=LOG_FORMAT,
-    handlers=[
-        logging.StreamHandler()
-    ]
-)
+logger = logging.getLogger("server_monitoring")
+logger.setLevel(getattr(logging, LOG_LEVEL, logging.DEBUG))
 
-logger = logging.getLogger("server_monitor")
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(module)s - %(message)s')
+
+# Console handler
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(formatter)
+logger.addHandler(console_handler)
+
+# File handler with rotation
+file_handler = RotatingFileHandler("app.log", maxBytes=1000000, backupCount=5)
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
