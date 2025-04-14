@@ -3,9 +3,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import psycopg2
 from logging_config import logger
 import atexit
+import uuid
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    error_id = str(uuid.uuid4())
+    logger.exception(f" Unhandled exception [{error_id}]")
+
+    return render_template("error.html", error_id=error_id), 500
 
 
 # Параметри підключення до PostgreSQL
@@ -177,6 +185,10 @@ def logout():
     return redirect(url_for('login'))
 
 
+import uuid
+from flask import flash, redirect, render_template, request, url_for, session
+import logging
+
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     """
@@ -198,24 +210,46 @@ def add_item():
         fire_rate = request.form['fire_rate']
         user_id = session['user_id']
 
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(
-            'INSERT INTO inventory (item_name, rarity, damage, fire_rate, user_id) VALUES (%s, %s, %s, %s, %s)',
-            (item_name, rarity, damage, fire_rate, user_id)
-        )
-        conn.commit()
-        conn.close()
-        return redirect(url_for('inventory'))
+        # Перевірка на порожні поля
+        if not item_name or not rarity or not damage or not fire_rate:
+            flash(" Усі поля повинні бути заповнені.", "error")
+            return render_template('add_item.html')
+
+        try:
+            # З'єднання з базою даних
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            # Вставка нового предмета
+            cursor.execute(
+                'INSERT INTO inventory (item_name, rarity, damage, fire_rate, user_id) VALUES (%s, %s, %s, %s, %s)',
+                (item_name, rarity, damage, fire_rate, user_id)
+            )
+            conn.commit()
+            conn.close()
+
+            flash(" Предмет успішно додано до інвентарю!", "success")
+            return redirect(url_for('inventory'))
+
+        except Exception as e:
+            # Генерація унікального ідентифікатора помилки
+            error_id = str(uuid.uuid4())
+
+            # Логування помилки
+            logger.exception(f" Помилка при додаванні предмета [{error_id}] | user_id={user_id} | item={item_name} | error={str(e)}")
+
+            # Відправка повідомлення користувачу
+            flash(f" Сталася помилка при додаванні предмета. Код помилки: {error_id}", "error")
+            return redirect(url_for('add_item'))
 
     return render_template('add_item.html')
 
 
 def on_shutdown():
-    logger.info("🛑 Application stopped")
+    logger.info("Application stopped")
 
 atexit.register(on_shutdown)
 
 if __name__ == '__main__':
-    logger.info("🚀 Application started")
+    logger.info("Application started")
     app.run(debug=True, host='0.0.0.0', port=5000)
