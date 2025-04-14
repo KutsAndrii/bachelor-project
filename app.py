@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import psycopg2
+from logging_config import logger
+import atexit
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
 
 # Параметри підключення до PostgreSQL
 db_config = {
@@ -208,5 +211,11 @@ def add_item():
     return render_template('add_item.html')
 
 
+def on_shutdown():
+    logger.info("🛑 Application stopped")
+
+atexit.register(on_shutdown)
+
 if __name__ == '__main__':
+    logger.info("🚀 Application started")
     app.run(debug=True, host='0.0.0.0', port=5000)
