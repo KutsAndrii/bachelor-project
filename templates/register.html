@@ -58,5 +58,11 @@
     </form>
   </div>
   <script src="{{ url_for('static', filename='js/validation.js') }}" defer></script>
+  <form action="{{ url_for('report_issue') }}" method="POST">
+    <input type="hidden" name="page" value="{{ request.path }}">
+    <textarea name="details" placeholder="Опишіть проблему..."></textarea>
+    <button type="submit">Повідомити про проблему</button>
+ </form>
+
 </body>
 </html>
