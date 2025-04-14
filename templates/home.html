@@ -6,10 +6,12 @@
 
   <title>ІС Моніторингу Серверної Інфраструктури</title>
 
+
+
   <!-- SEO метатеги -->
   <meta name="description" content="Інформаційна система моніторингу серверної інфраструктури – бакалаврський проєкт">
   <meta name="keywords" content="моніторинг, сервер, інфраструктура, продуктивність, надійність, бакалаврська робота">
-  <meta name="author" content="Іван Іванов">
+  <meta name="author" content="Куц Андрій">
 
   <!-- Open Graph -->
   <meta property="og:title" content="ІС Моніторингу Серверної Інфраструктури">
@@ -22,13 +24,22 @@
   <link rel="icon" type="image/png" href="static/favicon.png">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 
-  <!-- Стилі -->
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
   <header role="banner">
-    <img src="static/logo.png" alt="Логотип університету" width="100" itemprop="image">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Логотип університету" width="100" itemprop="image">
     <h1 itemprop="headline">Інформаційна система моніторингу продуктивності та надійності серверної інфраструктури</h1>
     <h2 lang="en">Information System for Monitoring Performance and Reliability of Server Infrastructure</h2>
     <nav role="navigation" aria-label="Головна навігація">
@@ -83,16 +94,12 @@
     <section aria-labelledby="contacts">
       <h3 id="contacts">Контактна інформація</h3>
       <address>
-        Студент: <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Іван Іванов</span></span><br>
-        Email: <a href="mailto:ivan@example.com" itemprop="email">ivan@example.com</a><br>
-        Керівник: д.т.н. Петро Петренко
+        Студент: <span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Куц Андрій</span></span><br>
+        Email: <a href="mailto:ivan@example.com" itemprop="email">andreikutss@gmale.com</a><br>
+        Керівник: П'ятаченко Владислав Юрійович
       </address>
     </section>
 
-    <section aria-labelledby="illustration">
-      <h3 id="illustration">Ілюстративні матеріали</h3>
-      <img src="static/server-diagram.png" alt="Схема системи моніторингу серверної інфраструктури" width="600" itemprop="image">
-    </section>
   </main>
 
   <footer role="contentinfo">
